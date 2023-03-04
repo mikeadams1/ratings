@@ -181,14 +181,14 @@ form.addEventListener('submit', (event) => {
 
   if (photoInput.files && photoInput.files[0]) {
     const photoFile = photoInput.files[0];
-    photoUrl = `https://qrcode.solidcommunity.net/public/a/photos/${dateValue.replace(/-/g, '')}_${timeValue.replace(/:/g, '')}_${photoFile.name}`;
+    photoUrl = `mikeadams1.github.io/ratings/photos/${dateValue.replace(/-/g, '')}_${timeValue.replace(/:/g, '')}_${photoFile.name}`;
 
     savePhoto(photoFile, photoUrl);
   }
 
   const commentData = `State: ${stateValue}\nLocation: ${locationValue}\nDate: ${dateValue}\nTime: ${timeValue}\nRating: ${ratingValue}\nReview: ${reviewValue}\nPhoto URL: ${photoUrl}\n`;
 
-  const commentUrl = 'https://qrcode.solidcommunity.net/public/a/comments.txt';
+  const commentUrl = 'mikeadams1.github.io/ratings/comments.txt';
 
   fetch(commentUrl, {
     method: 'POST',
