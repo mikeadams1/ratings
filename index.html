@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Police Officer Rating System</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://mikeadams1.github.io/form-playground/mashlib.js"></script>
+	<style>
+		form {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			padding: 20px;
+		}
+		
+		input, select, textarea {
+			margin-bottom: 10px;
+			padding: 5px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			width: 100%;
+			max-width: 600px;
+		}
+		
+		button {
+			margin-top: 10px;
+			padding: 10px;
+			background-color: #4CAF50;
+			color: white;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			width: 100%;
+			max-width: 600px;
+		}
+		
+		button:hover {
+			background-color: #3e8e41;
+		}
+		
+		@media only screen and (max-width: 768px) {
+			input, select, textarea {
+				max-width: 100%;
+			}
+		}
+	</style>
+</head>
+<body>
+	<h1>Police Officer Rating System</h1>
+	<form id="rating-form">
+		<label for="state">State:</label>
+		<select id="state" name="state" required>
+			<option value="" selected disabled>Select a state</option>
+			<option value="AL">Alabama</option>
+			<option value="AK">Alaska</option>
+			<option value="AZ">Arizona</option>
+			<option value="AR">Arkansas</option>
+			<option value="CA">California</option>
+			<option value="CO">Colorado</option>
+			<option value="CT">Connecticut</option>
+			<option value="DE">Delaware</option>
+			<option value="FL">Florida</option>
+			<option value="GA">Georgia</option>
+			<option value="HI">Hawaii</option>
+			<option value="ID">Idaho</option>
+			<option value="IL">Illinois</option>
+			<option value="IN">Indiana</option>
+			<option value="IA">Iowa</option>
+			<option value="KS">Kansas</option>
+			<option value="KY">Kentucky</option>
+			<option value="LA">Louisiana</option>
+			<option value="ME">Maine</option>
+			<option value="MD">Maryland</option>
+			<option value="MA">Massachusetts</option>
+			<option value="MI">Michigan</option>
+			<option value="MN">Minnesota</option>
+			<option value="MS">Mississippi</option>
+			<option value="MO">Missouri</option>
+			<option value="MT">Montana</option>
+			<option value="NE">Nebraska</option>
+			<option value="NV">Nevada</option>
+			<option value="NH">New Hampshire</option>
+			<option value="NJ">New Jersey</option>
+			<option value="NM">New Mexico</option>
+			<option value="NY">New York</option>
+			<option value="NC">North Carolina</option>
+			<option value="ND">North Dakota</option>
+			<option value="OH">Ohio</option>
+			<option value="OK">Oklahoma</option>
+			<option value="OR">Oregon</option>
+			<option value="PA">Pennsylvania</option>
+			<option value="RI">Rhode Island</option>
+			<option value="SC">South Carolina</option>
+			<option value="SD">South Dakota</option>
+			<option value="TN">Tennessee</option>
+			<option value="TX">Texas</option>
+			<option value="UT">Utah</option>
+			<option value="VT">Vermont</option>
+			<option value="VA">Virginia</option>
+			<option value="WA">Washington</option>
+			<option value="WV">West Virginia</option>
+			<option value="WI">Wisconsin</option>
+			<option value="WY">Wyoming</option>
+		</select><br>
+
+		<label for="badgeNumber">Badge Number:</label>
+		<input type="text" id="badgeNumber" name="badgeNumber" required><br>
+
+		<label for="location">Location:</label>
+<input type="text" id="location" name="location" required><br>
+
+<button type="button" onclick="getLocation()">Use Current Location</button>
+
+<script>
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+        alert("Geolocation is not supported by this browser.");
+    }
+}
+
+function showPosition(position) {
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
+    const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`;
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            const locationInput = document.getElementById('location');
+            locationInput.value = `${data.address.road}, ${data.address.city}, ${data.address.state}`;
+        })
+        .catch(error => console.error('Error:', error));
+}
+</script>
+
+		</p>
+
+		<label for="date">Date:</label>
+		<input type="date" id="date" name="date" required><br>
+
+		<label for="time">Time:</label>
+		<input type="time" id="time" name="time" required><br>
+
+		<label for="photo">Upload photo: Optional:</label>
+		<input type="file" id="photo" name="photo"><br>
+
+		<label for="rating">Rate your interaction:</label>
+		<select id="rating" name="rating" required>
+			<option value="" selected disabled>Select a rating</option>
+			<option value="1">1 star</option>
+			<option value="2">2 stars</option>
+			<option value="3">3 stars</option>
+			<option value="4">4 stars</option>
+			<option value="5">5 stars</option>
+		</select><br>
+
+		<label for="review">Leave a review:</label><br>
+		<textarea id="review" name="review" rows="4" cols="50"></textarea><br>
+<p>This survey and rating system is anonymous.</p>
+
+<button type="submit">Submit</button>
+  </form>
+
+  <script>
+    const form = document.getElementById('rating-form');
+
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const formData = new FormData(form);
+  const stateValue = formData.get('state');
+  const badgeNumberValue = formData.get('badgeNumber');
+  const locationValue = formData.get('location');
+  const dateValue = formData.get('date');
+  const timeValue = formData.get('time');
+  const ratingValue = formData.get('rating');
+  const reviewValue = formData.get('review');
+
+  const photoInput = document.getElementById('photo');
+  let photoUrl = null;
+
+  if (photoInput.files && photoInput.files[0]) {
+    const photoFile = photoInput.files[0];
+    photoUrl = `https://qrcode.solidcommunity.net/public/a/photos/${dateValue.replace(/-/g, '')}_${timeValue.replace(/:/g, '')}_${photoFile.name}`;
+
+    savePhoto(photoFile, photoUrl);
+  }
+
+  const commentData = `State: ${stateValue}\nLocation: ${locationValue}\nDate: ${dateValue}\nTime: ${timeValue}\nRating: ${ratingValue}\nReview: ${reviewValue}\nPhoto URL: ${photoUrl}\n`;
+
+  const commentUrl = 'https://qrcode.solidcommunity.net/public/a/comments.txt';
+
+  fetch(commentUrl, {
+    method: 'POST',
+    body: commentData,
+    headers: {
+      'Content-Type': 'text/plain'
+    }
+  })
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    alert('Your rating and review have been submitted.');
+    form.reset();
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+    alert('There was an error submitting your rating and review. Please try again later.');
+  });
+});
+
+async function savePhoto(photoFile, photoUrl) {
+  try {
+    const response = await fetch(photoUrl, {
+      method: 'PUT',
+      body: photoFile,
+      headers: {
+        'Content-Type': photoFile.type
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    alert('Your photo has been saved.');
+    return true;
+  } catch (error) {
+    console.error('Error:', error);
+    alert('There was an error saving your photo. Please try again later.');
+    return false;
+  }
+}
+
+  </script>
+</body>
+</html>
