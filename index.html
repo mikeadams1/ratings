@@ -4,6 +4,31 @@
 	<title>Police Officer Rating System</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</script>
+    <script type="text/javascript">
+      const urlParams = new URLSearchParams(window.location.search);
+      const officerName = urlParams.get('officerName');
+
+      const fileClient = new SolidFileClient();
+      const commentsPath = `/public/c/${officerName}/comments.txt`;
+      const ratingsPath = `/public/c/${officerName}/ratings.html`;
+
+      // Create a new ratings file with a default rating of 0
+      const defaultRating = 0;
+      const defaultContent = `<html><head><title>${officerName} Ratings</title></head><body><h1>${officerName} Ratings</h1><p>Rating: ${defaultRating}</p></body></html>`;
+      fileClient.createFile(ratingsPath, defaultContent).then(() => {
+        console.log(`Created new ratings file at ${ratingsPath}`);
+      }).catch((error) => {
+        console.error(`Failed to create new ratings file at ${ratingsPath}: ${error}`);
+      });
+
+      // Read the comments file and display them on the page
+      fileClient.readFile(commentsPath).then((comments) => {
+        // Parse comments and display them on the page
+      }).catch((error) => {
+        console.error(`Failed to read comments from ${commentsPath}: ${error}`);
+      });
+    </script>
 	<style>
 		form {
 			display: flex;
@@ -12,37 +37,38 @@
 			padding: 20px;
 		}
 		
-		input, select, textarea {
-			margin-bottom: 10px;
-			padding: 5px;
-			border: 1px solid #ccc;
-			border-radius: 5px;
-			width: 100%;
-			max-width: 600px;
-		}
-		
-		button {
-			margin-top: 10px;
-			padding: 10px;
-			background-color: #4CAF50;
-			color: white;
-			border: none;
-			border-radius: 5px;
-			cursor: pointer;
-			width: 100%;
-			max-width: 600px;
-		}
-		
-		button:hover {
-			background-color: #3e8e41;
-		}
-		
-		@media only screen and (max-width: 768px) {
 			input, select, textarea {
-				max-width: 100%;
-			}
+		margin-bottom: 10px;
+		padding: 5px;
+		border: 1px solid #ccc;
+		border-radius: 5px;
+		width: 100%;
+		max-width: 600px;
+	}
+	
+	button {
+		margin-top: 10px;
+		padding: 10px;
+		background-color: #002973;
+		color: white;
+		border: none;
+		border-radius: 5px;
+		cursor: pointer;
+		width: 100%;
+		max-width: 600px;
+	}
+	
+	button:hover {
+		background-color: #3e8e41;
+	}
+	
+	@media only screen and (max-width: 768px) {
+		input, select, textarea {
+			max-width: 100%;
 		}
-	</style>
+	}
+</style>
+
 </head>
 <body>
 	<h1>Police Officer Rating System</h1>
@@ -102,6 +128,9 @@
 			<option value="WY">Wyoming</option>
 		</select><br>
 
+                <label for="officerName">Officer Name:</label>
+                <input type="text" id="officerName" name="officerName" required><br>
+
 		<label for="badgeNumber">Badge Number:</label>
 		<input type="text" id="badgeNumber" name="badgeNumber" required><br>
 
@@ -133,8 +162,6 @@ function showPosition(position) {
 }
 </script>
 
-		</p>
-
 		<label for="date">Date:</label>
 		<input type="date" id="date" name="date" required><br>
 
@@ -156,13 +183,83 @@ function showPosition(position) {
 
 		<label for="review">Leave a review:</label><br>
 		<textarea id="review" name="review" rows="4" cols="50"></textarea><br>
-<p>This survey and rating system is anonymous.</p>
 
-<button type="submit">Submit</button>
+    <label for="stateLogo">Select state logo:</label>
+    <select id="stateLogo" name="stateLogo" required>
+        <option value="" selected disabled>Select a state logo</option>
+        <option value="alabama.jpeg">Alabama</option>
+        <option value="alaska.jpeg">Alaska</option>
+        <option value="arizona.jpeg">Arizona</option>
+        <option value="arkansas.jpeg">Arkansas</option>
+        <option value="california.jpeg">California</option>
+        <option value="colorado.jpeg">Colorado</option>
+        <option value="connecticut.jpeg">Connecticut</option>
+        <option value="delaware.jpeg">Delaware</option>
+        <option value="florida.jpeg">Florida</option>
+        <option value="georgia.jpeg">Georgia</option>
+        <option value="hawaii.jpeg">Hawaii</option>
+        <option value="idaho.jpeg">Idaho</option>
+        <option value="illinois.jpeg">Illinois</option>
+        <option value="indiana.jpeg">Indiana</option>
+        <option value="iowa.jpeg">Iowa</option>
+        <option value="kansas.jpeg">Kansas</option>
+        <option value="kentucky.jpeg">Kentucky</option>
+        <option value="louisiana.jpeg">Louisiana</option>
+        <option value="maine.jpeg">Maine</option>
+        <option value="maryland.jpeg">Maryland</option>
+        <option value="massachusetts.jpeg">Massachusetts</option>
+        <option value="michigan.jpeg">Michigan</option>
+        <option value="minnesota.jpeg">Minnesota</option>
+        <option value="mississippi.jpeg">Mississippi</option>
+        <option value="missouri.jpeg">Missouri</option>
+        <option value="montana.jpeg">Montana</option>
+        <option value="nebraska.jpeg">Nebraska</option>
+        <option value="nevada.jpeg">Nevada</option>
+        <option value="newhampshire.jpeg">New Hampshire</option>
+        <option value="newjersey.jpeg">New Jersey</option>
+        <option value="newmexico.jpeg">New Mexico</option>
+        <option value="newyork.jpeg">New York</option>
+        <option value="northcarolina.jpeg">North Carolina</option>
+        <option value="northdakota.jpeg">North Dakota</option>
+        <option value="ohio.jpeg">Ohio</option>
+        <option value="oklahoma.jpeg">Oklahoma</option>
+        <option value="oregon.jpeg">Oregon</option>
+        <option value="pennsylvania.jpeg">Pennsylvania</option>
+        <option value="rhodeisland.jpeg">Rhode Island</option>
+        <option value="southcarolina.jpeg">South Carolina</option>
+        <option value="southdakota.jpeg">South Dakota</option>
+        <option value="tennessee.jpeg">Tennessee</option>
+        <option value="texas.jpeg">Texas</option>
+        <option value="utah.jpeg">Utah</option>
+        <option value="vermont.jpeg">Vermont</option>
+        <option value="virginia.jpeg">Virginia</option>
+        <option value="washington.jpeg">Washington</option>
+        <option value="westvirginia.jpeg">West Virginia</option>
+        <option value="wisconsin.jpeg">Wisconsin</option>
+        <option value="wyoming.jpeg">Wyoming</option>
+    </select><br>
+
+    <p>This survey and rating system is anonymous.</p>
+
+    <button type="submit">Submit</button>
   </form>
+  
+  <div id="output" style="display: none;">
+  <h2>Rating and Review</h2>
+  <p>State: <span id="output-state"></span></p>
+  <p>Badge Number: <span id="output-badge"></span></p>
+  <p>Officer Name: <span id="output-officer"></span></p>
+  <p>Location: <span id="output-location"></span></p>
+  <p>Date: <span id="output-date"></span></p>
+  <p>Time: <span id="output-time"></span></p>
+  <p>Rating: <span id="output-rating"></span></p>
+  <p>Review: <span id="output-review"></span></p>
+  <p>Photo URL: <a id="output-photo" target="_blank"></a></p>
+</div>
+
 
   <script>
-    const form = document.getElementById('rating-form');
+        const form = document.getElementById('rating-form');
 
 form.addEventListener('submit', (event) => {
   event.preventDefault();
@@ -180,14 +277,16 @@ form.addEventListener('submit', (event) => {
 
   if (photoInput.files && photoInput.files[0]) {
     const photoFile = photoInput.files[0];
-    photoUrl = `https://qrcode.solidcommunity.net/public/a/photos/${dateValue.replace(/-/g, '')}_${timeValue.replace(/:/g, '')}_${photoFile.name}`;
+    const photoFileName = `${dateValue.replace(/-/g, '')}_${timeValue.replace(/:/g, '')}_${photoFile.name}`;
+    photoUrl = `https://qrcode.solidcommunity.net/public/c/${stateValue}/photos/${photoFileName}`;
 
     savePhoto(photoFile, photoUrl);
   }
 
-  const commentData = `State: ${stateValue}\nLocation: ${locationValue}\nDate: ${dateValue}\nTime: ${timeValue}\nRating: ${ratingValue}\nReview: ${reviewValue}\nPhoto URL: ${photoUrl}\n`;
+  const officerNameValue = formData.get('officerName');
+  const commentData = `State: ${stateValue}\nBadge Number: ${badgeNumberValue}\nOfficer Name: ${officerNameValue}\nLocation: ${locationValue}\nDate: ${dateValue}\nTime: ${timeValue}\nRating: ${ratingValue}\nReview: ${reviewValue}\nPhoto URL: ${photoUrl}\n`;
 
-  const commentUrl = 'https://qrcode.solidcommunity.net/public/a/comments.txt';
+  const commentUrl = `https://qrcode.solidcommunity.net/public/c/${stateValue}/comments.txt`;
 
   fetch(commentUrl, {
     method: 'POST',
@@ -200,38 +299,156 @@ form.addEventListener('submit', (event) => {
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
-    alert('Your rating and review have been submitted.');
+    document.getElementById('output-state').textContent = stateValue;
+    document.getElementById('output-badge').textContent = badgeNumberValue;
+    document.getElementById('output-officer').textContent = officerNameValue;
+    document.getElementById('output-location').textContent = locationValue;
+    document.getElementById('output-date').textContent = dateValue;
+    document.getElementById('output-time').textContent = timeValue;
+    document.getElementById('output-rating').textContent = ratingValue;
+    document.getElementById('output-review').textContent = reviewValue;
+    document.getElementById('output-photo').href = photoUrl;
+    document.getElementById('output-photo').textContent = photoUrl;
+    document.getElementById('output').style.display = 'block';
     form.reset();
-  })
-  .catch((error) => {
-    console.error('Error:', error);
-    alert('There was an error submitting your rating and review. Please try again later.');
-  });
+
+    const commentPageUrl = `https://qrcode.solidcommunity.net/public/c/${stateValue}/${officerNameValue.replace(/ /g, '')}_${dateValue.replace(/-/g, '')}_${timeValue.replace(/:/g, '')}_ratings.html`;
+
+
+    const commentPageData = `<!DOCTYPE html>
+    <html>
+    <head>
+    	<title>Police Officer Rating System - ${officerNameValue}</title>
+    	<meta charset="UTF-8">
+    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    	<style>
+    		img {
+    			max-width: 100%;
+    		}
+    	</style>
+    </head>
+    <body>
+    	<h1>Police Officer Rating System - ${officerNameValue}</h1>
+    	<p>State: ${stateValue}</p>
+    	<p>Badge Number: ${badgeNumberValue}</p>
+    	
+
+	<p>Officer Name: ${officerNameValue}</p>
+	<p>Location: ${locationValue}</p>
+	<p>Date: ${dateValue}</p>
+	<p>Time: ${timeValue}</p>
+	<p>Rating: ${ratingValue}</p>
+	<p>Review: ${reviewValue}</p>
+	<p>Photo:</p>
+	<img src="${photoUrl}">
+</body>
+</html>`;
+
+fetch(commentPageUrl, {
+  method: 'PUT',
+  body: commentPageData,
+  headers: {
+    'Content-Type': 'text/html'
+  }
+})
+.then((response) => {
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+  console.log('Comment page created.');
+})
+.catch((error) => {
+  console.error('Error:', error);
 });
 
-async function savePhoto(photoFile, photoUrl) {
-  try {
-    const response = await fetch(photoUrl, {
-      method: 'PUT',
-      body: photoFile,
-      headers: {
-        'Content-Type': photoFile.type
-      }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        alert('There was an error submitting your rating and review. Please try again later.');
+      });
     });
 
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
+    async function savePhoto(photoFile, photoUrl) {
+      try {
+        const response = await fetch(photoUrl, {
+          method: 'PUT',
+          body: photoFile,
+          headers: {
+            'Content-Type': photoFile.type
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        alert('Your photo has been saved.');
+        return true;
+      } catch (error) {
+        console.error('Error:', error);
+        alert('There was an error saving your photo. Please try again later.');
+        return false;
+      }
     }
 
-    alert('Your photo has been saved.');
-    return true;
-  } catch (error) {
-    console.error('Error:', error);
-    alert('There was an error saving your photo. Please try again later.');
-    return false;
-  }
-}
+    const stateLogoSelect = document.getElementById('stateLogo');
 
+    stateLogoSelect.addEventListener('change', () => {
+      const logoUrl = `https://qrcode.solidcommuntiy.net/public/c/${stateLogoSelect.value}`;
+      const logoImg = document.getElementById('state-logo');
+      logoImg.src = logoUrl;
+    });
   </script>
+<script>
+  const submitButton = document.querySelector("#submitButton");
+
+  submitButton.addEventListener("click", async (event) => {
+    event.preventDefault();
+
+    const form = document.querySelector("#commentForm");
+    const formData = new FormData(form);
+
+    const comment = formData.get("comment");
+    const badgeNumber = formData.get("badgeNumber");
+    const state = formData.get("state");
+    const photo = formData.get("photo");
+
+    const fileClient = new SolidFileClient();
+
+    const date = new Date();
+    const dateString = date.toISOString();
+
+    const commentFilename = `${dateString}_${badgeNumber}.txt`;
+    const photoFilename = `${dateString}_${badgeNumber}.jpg`;
+
+    const commentPath = `/public/c/${state}/${commentFilename}`;
+    const photoPath = `/public/c/${state}/${photoFilename}`;
+
+    // Save comment to Solid POD
+    await fileClient.createFile(commentPath, comment, "text/plain");
+
+    // Save photo to Solid POD
+    const photoBlob = formData.get("photo").blob;
+    await fileClient.createFile(photoPath, photoBlob, "image/jpeg");
+
+    // Display link to comment and photo
+    const linkContainer = document.querySelector("#linkContainer");
+    const commentLink = document.createElement("a");
+    commentLink.href = commentPath;
+    commentLink.textContent = "View Comment";
+    const photoLink = document.createElement("a");
+    photoLink.href = photoPath;
+    photoLink.textContent = "View Photo";
+    linkContainer.appendChild(commentLink);
+    linkContainer.appendChild(document.createElement("br"));
+    linkContainer.appendChild(photoLink);
+  });
+
 </body>
 </html>
+
+</body>
+</html>
+
+
+
