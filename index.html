@@ -4,16 +4,14 @@
 	<title>Police Officer Rating System</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<script src="https://cdn.jsdelivr.net/npm/solid-file-client/dist/browser/solid-file-client.bundle.js"></script>
-
-
+</script>
     <script type="text/javascript">
       const urlParams = new URLSearchParams(window.location.search);
       const officerName = urlParams.get('officerName');
 
       const fileClient = new SolidFileClient();
-      const commentsPath = `https://qrcode.solidcommunity.net/public/c/${officerName}/comments.txt`;
-      const ratingsPath = `https://qrcode.solidcommunity.net/public/c/${officerName}/ratings.html`;
+      const commentsPath = `/public/a/${officerName}/comments.txt`;
+      const ratingsPath = `/public/a/${officerName}/ratings.html`;
 
       // Create a new ratings file with a default rating of 0
       const defaultRating = 0;
@@ -186,62 +184,9 @@ function showPosition(position) {
 		<label for="review">Leave a review:</label><br>
 		<textarea id="review" name="review" rows="4" cols="50"></textarea><br>
 
-    <label for="stateLogo">Select state logo:</label>
-    <select id="stateLogo" name="stateLogo" required>
-        <option value="" selected disabled>Select a state logo</option>
-        <option value="alabama.jpeg">Alabama</option>
-        <option value="alaska.jpeg">Alaska</option>
-        <option value="arizona.jpeg">Arizona</option>
-        <option value="arkansas.jpeg">Arkansas</option>
-        <option value="california.jpeg">California</option>
-        <option value="colorado.jpeg">Colorado</option>
-        <option value="connecticut.jpeg">Connecticut</option>
-        <option value="delaware.jpeg">Delaware</option>
-        <option value="florida.jpeg">Florida</option>
-        <option value="georgia.jpeg">Georgia</option>
-        <option value="hawaii.jpeg">Hawaii</option>
-        <option value="idaho.jpeg">Idaho</option>
-        <option value="illinois.jpeg">Illinois</option>
-        <option value="indiana.jpeg">Indiana</option>
-        <option value="iowa.jpeg">Iowa</option>
-        <option value="kansas.jpeg">Kansas</option>
-        <option value="kentucky.jpeg">Kentucky</option>
-        <option value="louisiana.jpeg">Louisiana</option>
-        <option value="maine.jpeg">Maine</option>
-        <option value="maryland.jpeg">Maryland</option>
-        <option value="massachusetts.jpeg">Massachusetts</option>
-        <option value="michigan.jpeg">Michigan</option>
-        <option value="minnesota.jpeg">Minnesota</option>
-        <option value="mississippi.jpeg">Mississippi</option>
-        <option value="missouri.jpeg">Missouri</option>
-        <option value="montana.jpeg">Montana</option>
-        <option value="nebraska.jpeg">Nebraska</option>
-        <option value="nevada.jpeg">Nevada</option>
-        <option value="newhampshire.jpeg">New Hampshire</option>
-        <option value="newjersey.jpeg">New Jersey</option>
-        <option value="newmexico.jpeg">New Mexico</option>
-        <option value="newyork.jpeg">New York</option>
-        <option value="northcarolina.jpeg">North Carolina</option>
-        <option value="northdakota.jpeg">North Dakota</option>
-        <option value="ohio.jpeg">Ohio</option>
-        <option value="oklahoma.jpeg">Oklahoma</option>
-        <option value="oregon.jpeg">Oregon</option>
-        <option value="pennsylvania.jpeg">Pennsylvania</option>
-        <option value="rhodeisland.jpeg">Rhode Island</option>
-        <option value="southcarolina.jpeg">South Carolina</option>
-        <option value="southdakota.jpeg">South Dakota</option>
-        <option value="tennessee.jpeg">Tennessee</option>
-        <option value="texas.jpeg">Texas</option>
-        <option value="utah.jpeg">Utah</option>
-        <option value="vermont.jpeg">Vermont</option>
-        <option value="virginia.jpeg">Virginia</option>
-        <option value="washington.jpeg">Washington</option>
-        <option value="westvirginia.jpeg">West Virginia</option>
-        <option value="wisconsin.jpeg">Wisconsin</option>
-        <option value="wyoming.jpeg">Wyoming</option>
-    </select><br>
 
-    <p>This survey and rating system is anonymous.</p>
+
+    <p>This survey and rating system was created in part by ChatGPT.</p>
 
     <button type="submit">Submit</button>
   </form>
@@ -280,7 +225,7 @@ form.addEventListener('submit', (event) => {
   if (photoInput.files && photoInput.files[0]) {
     const photoFile = photoInput.files[0];
     const photoFileName = `${dateValue.replace(/-/g, '')}_${timeValue.replace(/:/g, '')}_${photoFile.name}`;
-    photoUrl = `https://qrcode.solidcommunity.net/public/c/${stateValue}/photos/${photoFileName}`;
+    photoUrl = `https://index.inrupt.net/public/a/${stateValue}/photos/${photoFileName}`;
 
     savePhoto(photoFile, photoUrl);
   }
@@ -288,7 +233,7 @@ form.addEventListener('submit', (event) => {
   const officerNameValue = formData.get('officerName');
   const commentData = `State: ${stateValue}\nBadge Number: ${badgeNumberValue}\nOfficer Name: ${officerNameValue}\nLocation: ${locationValue}\nDate: ${dateValue}\nTime: ${timeValue}\nRating: ${ratingValue}\nReview: ${reviewValue}\nPhoto URL: ${photoUrl}\n`;
 
-  const commentUrl = `https://qrcode.solidcommunity.net/public/c/${stateValue}/comments.txt`;
+  const commentUrl = `https://index.inrupt.net/public/a/${stateValue}/comments.txt`;
 
   fetch(commentUrl, {
     method: 'POST',
@@ -314,7 +259,7 @@ form.addEventListener('submit', (event) => {
     document.getElementById('output').style.display = 'block';
     form.reset();
 
-    const commentPageUrl = `https://qrcode.solidcommunity.net/public/c/${stateValue}/${officerNameValue.replace(/ /g, '')}_${dateValue.replace(/-/g, '')}_${timeValue.replace(/:/g, '')}_ratings.html`;
+    const commentPageUrl = `https://index.inrupt.net/public/a/${stateValue}/${officerNameValue.replace(/ /g, '')}_${dateValue.replace(/-/g, '')}_${timeValue.replace(/:/g, '')}_ratings.html`;
 
 
     const commentPageData = `<!DOCTYPE html>
@@ -396,7 +341,7 @@ fetch(commentPageUrl, {
     const stateLogoSelect = document.getElementById('stateLogo');
 
     stateLogoSelect.addEventListener('change', () => {
-      const logoUrl = `https://qrcode.solidcommuntiy.net/public/c/${stateLogoSelect.value}`;
+      const logoUrl = `https://index.inrupt.net/public/a/${stateLogoSelect.value}`;
       const logoImg = document.getElementById('state-logo');
       logoImg.src = logoUrl;
     });
@@ -423,8 +368,8 @@ fetch(commentPageUrl, {
     const commentFilename = `${dateString}_${badgeNumber}.txt`;
     const photoFilename = `${dateString}_${badgeNumber}.jpg`;
 
-    const commentPath = `/public/c/${state}/${commentFilename}`;
-    const photoPath = `/public/c/${state}/${photoFilename}`;
+    const commentPath = `/public/a/${state}/${commentFilename}`;
+    const photoPath = `/public/a/${state}/${photoFilename}`;
 
     // Save comment to Solid POD
     await fileClient.createFile(commentPath, comment, "text/plain");
@@ -448,9 +393,3 @@ fetch(commentPageUrl, {
 
 </body>
 </html>
-
-</body>
-</html>
-
-
-
