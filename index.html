@@ -10,8 +10,8 @@
       const officerName = urlParams.get('officerName');
 
       const fileClient = new SolidFileClient();
-      const commentsPath = `/public/a/${officerName}/comments.txt`;
-      const ratingsPath = `/public/a/${officerName}/ratings.html`;
+      const commentsPath = `https://index.inrupt.net/public/a/${officerName}/comments.txt`;
+      const ratingsPath = `https://index.inrupt.net/public/a/${officerName}/ratings.html`;
 
       // Create a new ratings file with a default rating of 0
       const defaultRating = 0;
@@ -368,8 +368,8 @@ fetch(commentPageUrl, {
     const commentFilename = `${dateString}_${badgeNumber}.txt`;
     const photoFilename = `${dateString}_${badgeNumber}.jpg`;
 
-    const commentPath = `/public/a/${state}/${commentFilename}`;
-    const photoPath = `/public/a/${state}/${photoFilename}`;
+    const commentPath = `https://index.inrupt.net/public/a/${state}/${commentFilename}`;
+    const photoPath = `https://index.inrupt.net/public/a/${state}/${photoFilename}`;
 
     // Save comment to Solid POD
     await fileClient.createFile(commentPath, comment, "text/plain");
